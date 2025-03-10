@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/EugeneShershen/aqa_hillel_1308'
+            }
+        }
+        stage('Install dependencies') {
+            steps {
+                bat '''
+                python -m venv venv
+                cd venv/bin/activate
+                pip install -r lesson_29/requirements.txt
+                '''
+            }
+        }
+        stage('Run tests') {
+            steps {
+                bat '''
+                cd venv/bin/activate
+                pytest
+                '''
+            }
+        }
+    }
+    post {
+        always {
+            allure includeProperties:
+                false,
+                jdk: '',
+                results: [[path: 'allure-results']]
+        }
+    }
+}

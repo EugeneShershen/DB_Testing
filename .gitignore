@@ -1,4 +1,8 @@
 .idea/
+allure-results
+allure-report
+local_reports
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
