@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/EugeneShershen/DB_Testing'
+            }
+        }
+        stage('Build docker image') {
+            steps {
+                bat '''
+                docker build -t db_testing -f Dockerfile_test .
+                '''
+            }
+        }
+        stage('Run tests') {
+            steps {
+                bat '''
+                docker run --rm -v $(pwd)/allure-results:/app/allure-results --network test_network db_testing
+                '''
+            }
+        }
+    }
+    post {
+        always {
+            allure includeProperties:
+                false,
+                jdk: '',
+                results: [[path: 'allure-results']]
+        }
+    }
+}
