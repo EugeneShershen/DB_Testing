@@ -17,7 +17,7 @@ pipeline {
         stage('Run tests') {
             steps {
                 bat '''
-                docker run --rm -v $(pwd)/allure-results:/app/allure-results --network test_network db_testing
+                docker run --rm -v "%CD%\\allure-results:/app/allure-results" --network test_network db_testing
                 '''
             }
         }
