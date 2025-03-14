@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/EugeneShershen/aqa_hillel_1308'
+                git branch: 'main', url: 'https://github.com/EugeneShershen/DB_Testing'
             }
         }
         stage('Install dependencies') {
@@ -12,7 +12,7 @@ pipeline {
                 bat '''
                 python -m venv venv
                 cd venv/bin/activate
-                pip install -r lesson_29/requirements.txt
+                pip install -r requirements.txt
                 '''
             }
         }
